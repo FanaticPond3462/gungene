@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+
+<head>
+    <title>ToisGunGiveCommandGenerator</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <h1>銃コマンドジェネレーター</h1>
+        <div>
+            <input id="read" type="button" class="headbutton" value="読み込み">
+            <input id="save" type="button" class="headbutton" value="保存">
+        </div>
+    </header>
+    <div class="list">
+        <div class="group">
+            <div class="yoko">
+                <h1>root</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">一番上に記述されるNBT</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>type</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">アイテムの種類:(gun|knife|grenade)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <select name="type">
+                        <option value="gun">gun</option>
+                        <option value="knife">knife</option>
+                        <option value="grenade">grenade</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>slot</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">スロット:(main|sub|grenade)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <select name="slot">
+                        <option value="main">main</option>
+                        <option value="sub">sub</option>
+                        <option value="grenade">grenade</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>single_reload</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">単発リロード:(1b|0b)<br>1bはマガジンリロード<br>0bは単発リロード</div>
+                    </div>
+                </div>
+                <div class="toggle_button">
+                    <input name="single_reload" id="toggle" class="toggle_input" type='checkbox' />
+                    <label for="toggle" class="toggle_label">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>gun_id</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">銃のID:(半角英数字と_)<br>例:ppsh-41,barrett_m8</div>
+                    </div>
+                </div>
+                <div class="inputer"><input name="gun_id"></div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>displayname</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">表示名:(AK-47など)<br>例:PPSh-41</div>
+                    </div>
+                </div>
+                <div class="inputer"><input name="displayname"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>ammo</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の弾薬の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>spa</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">予備弾薬:(最大弾薬の2~4倍程度)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="spa">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>max</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">最大弾薬:(実銃参照)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="max">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>rem</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">入手時の弾薬数:(最大弾薬と同じ)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="max">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>type</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">使用する弾薬:(ar_ammo|sr_ammo|hg_smg_ammo|sg_ammo)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <select name="type">
+                        <option value="ar_ammo">ar_ammo</option>
+                        <option value="sr_ammo">sr_ammo</option>
+                        <option value="hg_smg_ammo">hg_smg_ammo</option>
+                        <option value="sg_ammo">sg_ammo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>amount</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードに消費する弾薬の数:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="amount">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_time</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードにかかる合計時間:(tick)<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_time">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_s_time</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">シングルリロードで1つ弾を込めるのにかかる時間:(tick)<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_s_time">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>power</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の弾のダメージの設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>damage</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">与えるダメージ:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="damage">
+                    <h1 id="number" class="damage"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>damage_h</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">ヘッドショットのダメージ:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="damage_h">
+                    <h1 id="number" class="damage_h"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>bullet</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">弾道の処理に使われるID:(normal|flame|m203grenade)等<br>特殊な銃でない限りnormalでいい</div>
+                    </div>
+                </div>
+                <div class="inputer"><input name="bullet"></div>
+            </div>
+        </div>
+        <h1 class="dps">DPS - -1dps headshot DPS - -1dps</h1>
+        <div class="group">
+            <div class="yoko">
+                <h1>rate</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の発射前後の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>rate</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">発射レート:(-1|-0.1|0|0.1|1|1.2|2|2.3|3|4|8)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="rate">
+                    <h1 id="number" class="rate"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>shotrecoil_time</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">［データ削除済］を［編集済］するために使われる。<br>現在このNBTは██████のため使用されていない。</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="shotrecoil_time">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>cooldown</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">射撃後のクールダウン:(tick)<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="cooldown">
+                    <h1 id="number" class="cooldown"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>swapspeed</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">持ち替えにかかる時間:(tick)\<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="swapspeed">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>distance</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の弾の弾速と射程距離の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>range</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">射程距離:(tick)<br>1秒は20tick<br>何tickの間弾を進めるか</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="range">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>speed</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">弾速:(数)<br>1秒は20tick<br>1tickに(数)x0.25ブロック進める</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="speed">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>accuracy</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の水平･垂直の反動の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>ver_accuracy</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">垂直反動:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="ver_accuracy">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>hor_accuracy</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">水平反動:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="hor_accuracy">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>recoilc</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の反動の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>aim_stability</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">エイム中の反動にかかる倍率:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="aim_stability">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>hip_stability</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">███で［編集済］にかかる倍率:(［データ削除済］)<br>データの読み込みに失敗しました。</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="hip_stability">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>jump_stability</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">空中で反動にかかる倍率:(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="jump_stability">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>timings</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の動作のタイミングの設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>cooldown_sound</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">クールダウンが終わるまでの残り何tickのタイミングで<br>クールダウンサウンドを鳴らすか:(tick)<br>1秒は20tick
+                        </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="cooldown_sound">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_1</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの1番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_1">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_2</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの2番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick/div>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_2">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_3</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの3番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_3">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_4</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの4番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_4">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_5</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの5番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick/div>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_5">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_6</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの6番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick
+                        </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_6">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_7</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの7番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick
+                        </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_7">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_8</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">
+                            リロードの8番のアニメーション・サウンドを<br>リロードが終わるまでのこり何tickの<br>タイミングで読み込むか:(tick)<br>1秒は20tick
+                        </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_8">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_s</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードが終わるまで残り何tickで<br>シングルリロードが開始されるか:(tick)\n1秒は20tick</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_s">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>textures</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃のテクスチャ(カスタムモデルデータ)の設定<br>なんてねぇよ。</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>hip</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">うるせぇよ</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="hip">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>peep</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">黙れよ</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="peep">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>run</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">設定なんかねぇよ</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="run">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+
+            <div class="input">
+                <div class="yoko">
+                    <h2>noammo_hip</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">アイテムモディファイこ↑そ↓正義。</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="noammo_hip">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>noammo_peep</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">設定なんか</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="noammo_peep">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>noammo_run</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">ねぇよ</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="noammo_run">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_1</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">正しいのは俺</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_1">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_2</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">その省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_2">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_3</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_3">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_4</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">その省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_4">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_5</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">その省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_5">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_6</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_6">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_7</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">その省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_7">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_8</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">その省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="reload_8">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>cooldown_hip</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="cooldown_hip">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>cooldown_peep</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">その省略</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="cooldown_peep">
+                    <h1 id="number"><input value="0"></h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>flash</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">(訳:item modifyで勝手に設定されるから説明いらないと思う)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="flash">
+                    <h1 id="number"><input value="0">
+                    </h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>sounds</h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃のサウンドの設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>shot</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">射撃音:(shot.rifle1など)</div>
+                    </div>
+                </div>
+                <div class="inputer"><input name="shot"></div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>cooldown</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">クールダウンの設定したタイミングになる音:(other.hold1など)</div>
+                    </div>
+                </div>
+                <div class="inputer"><input name="cooldown">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_1</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション1番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_1">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_2</h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション2番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_2">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_3
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション3番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_3">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_4
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション4番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_4">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_5
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション5番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_5">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_6
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション6番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_6">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_7
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション7番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_7">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_8
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">リロードのアニメーション8番目の時になる音:(reload.mag1など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_8">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>reload_s
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">シングルリロードの時になる音:(other.hold3など)</div>
+                    </div>
+                </div>
+                <div class="inputer">
+                    <input name="reload_s">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>mobility
+                </h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の移動速度の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>move_speed
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">持っているときの移動速度(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="move_speed">
+                    <h1 id="number">
+                        <input value="0">
+                    </h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>aim_move_speed
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">エイム中の移動速度(数)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="aim_move_speed">
+                    <h1 id="number">
+                        <input value="0">
+                    </h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>operability
+                </h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">銃の次の行動に移る時間の設定</div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>aim_speed
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">エイムするのにかかる時間(tick)</div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="aim_speed">
+                    <h1 id="number">
+                        <input value="0">
+                    </h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+            <div class="input">
+                <div class="yoko">
+                    <h2>dashshootspeed
+                    </h2>
+                    <div class="tooltip">
+                        <p class="helpbutton"></p>
+                        <div class="description">走ってから射撃に移れるまでの時間(tick) </div>
+                    </div>
+                </div>
+                <div class="yoko" id="seisuu">
+                    <input type="button" id="minus" value="-" name="dashshootspeed">
+                    <h1 id="number">
+                        <input value="0">
+                    </h1>
+                    <input type="button" id="plus" value="+">
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="yoko">
+                <h1>attachment
+                </h1>
+                <div class="tooltip">
+                    <p class="helpbutton"></p>
+                    <div class="description">アタッチメントの設定</div>
+                </div>
+            </div>
+            <div id="container">
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script type="text/javascript" src="./nbt.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+</body>
+
+</html>
